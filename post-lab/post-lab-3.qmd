@@ -23,6 +23,32 @@ Create some exploratory tables or charts to help you better understand possible 
 
 ## Use a Tidymodel framework to conduct your analysis.
 
+
+```{r}
+set.seed(123)
+
+qlty_split <- initial_split(wine_quality, prop = 0.80,strata = quality)
+  ### stratified on `wine quality`; training and test splits will both have ~60/40% survived = 0/1
+qlty_train_df <- training(qlty_split)
+qlty_test_df <- testing(qlty_split)
+```
+
+```{r}
+qlty_train_df %>%
+  group_by(quality) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(prop = n / sum(n))
+
+qlty_test_df %>%
+  group_by(quality) %>%
+  summarize(n = n()) %>%
+  ungroup() %>%
+  mutate(prop = n / sum(n))
+```
+
+
+
 ## Visualize
 
 Present your final results and upgrade this document's YAML to a professional level quality.
